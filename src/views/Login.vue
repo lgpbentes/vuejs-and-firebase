@@ -5,6 +5,12 @@
         <input type="password" v-model="password" placeholder="Password"><br>
         <button @click="login">Sign In</button>
         <p>
+          or Sign In with Google <br>
+          <button @click="socialLogin" class="social-button">
+            <img alt="Google Logo" src="../assets/google-logo.png">
+          </button>
+        </p>
+        <p>
           You don't have an account? You can
           <router-link to="/sign-up">
             create one
@@ -39,6 +45,15 @@ export default {
         },
       );
     },
+    socialLogin() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      // eslint-disable-next-line no-unused-vars
+      firebase.auth().signInWithPopup(provider).then((result) => {
+        this.$router.replace('home');
+      }).catch((err) => {
+        alert(`Oops. ${err.message}`);
+      });
+    },
   },
 };
 </script>
@@ -69,4 +84,23 @@ export default {
         text-decoration: underline;
         cursor: pointer;
     }
+
+    .social-button {
+      width: 50px;
+      background: white;
+      padding: 10px;
+      border-radius: 100%;
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+      outline: 0;
+      border:0;
+    }
+
+    .social-button:active {
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+    }
+
+    .social-button img {
+      width: 100%;
+    }
+
 </style>

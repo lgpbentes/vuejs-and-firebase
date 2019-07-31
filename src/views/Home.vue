@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <h3> Hello, {{showUsername}}!</h3>
     <HelloWorld msg="Welcome to this sample Vue.js App"/>
     <button @click="logout">Logout</button>
   </div>
@@ -15,6 +16,12 @@ export default {
   name: 'home',
   components: {
     HelloWorld,
+  },
+  computed: {
+    showUsername() {
+      const { currentUser } = firebase.auth();
+      return currentUser.displayName || currentUser.email;
+    },
   },
   methods: {
     logout() {
